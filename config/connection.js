@@ -25,9 +25,10 @@ const sequelize = process.env.JAWSDB_URL ? // If the server is live on heroku
     {
       host: 'localhost',
       dialect: 'mysql',
-      dialectOptions: {
+      dialectOptions:
+      {
         decimalNumbers: true
-      },
+      }
     });
 
 module.exports = sequelize;
