@@ -7,6 +7,7 @@ const sequelize = require('../config/connection');
 const bcrypt = require('bcrypt');
 
 // 'users' table class Sequelize Model
+
 class User extends Model
 {
   /**
@@ -23,7 +24,7 @@ class User extends Model
 
 User.init(
 {
-  id: // PRIMARY KEY - unique string for user ID
+  id: // PRIMARY KEY - unique String for user ID, ex. 'user-s34m23kxsd2'
   {
     type: DataTypes.STRING,
     allowNull: false,
