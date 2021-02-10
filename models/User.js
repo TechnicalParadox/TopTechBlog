@@ -26,7 +26,7 @@ User.init(
 {
   id: // PRIMARY KEY - unique String for user ID, ex. 'user-s34m23kxsd2'
   {
-    type: DataTypes.STRING,
+    type: DataTypes.STRING(32),
     allowNull: false,
     primaryKey: true
   },
@@ -39,7 +39,7 @@ User.init(
   },
   username: // the User's username
   {
-    type: DataTypes.STRING,
+    type: DataTypes.STRING(32),
     allowNull: false,
     unique: true,
     validate: { len: [3] }
