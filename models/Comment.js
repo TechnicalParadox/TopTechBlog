@@ -39,4 +39,10 @@ Comment.init(
 },
 {
   // Hooks
+  hooks: {},
+  sequelize,
+  underscored: true,
+  modelName: 'comment'
 });
+
+module.exports = Comment;
