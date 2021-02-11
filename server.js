@@ -14,7 +14,7 @@ const path = require('path');
 // sequelize MySQL database
 const sequelize = require('./config/connection');
 // our API/HTML routes
-const routes = require('./routes');
+const routes = require('./controllers');
 
 // Create an instance of the express app.
 const app = express();
@@ -34,7 +34,7 @@ app.use(express.static(path.join(__dirname, '/public/assets')));
 app.engine("handlebars", exphbs({ deafaultLayout: "main" }));
 app.set("view engine", "handlebars");
 
-// Use our routes
+// Use our routes defined in ./controllers
 app.use(routes);
 
 // sync sequelize models to the database, then turn on the server
