@@ -1,12 +1,19 @@
-// ------------------------- SETUP -------------------------
-require('dotenv').config(); // for process.env.DEFAULT_PORT
 // Dependencies
+// ------------
+// dotENV config ./.env environment variables file
+require('dotenv').config(); // for process.env.DEFAULT_PORT
+// express server
 const express = require('express');
+// express handlebars templating engine
 const exphbs  = require('express-handlebars');
+// body parser
 const bodyParser = require('body-parser');
+// path
 const path = require('path');
-const mysql = require('mysql2');
+// // TODO: delete if unneeded const mysql = require('mysql2');
+// sequelize MySQL database
 const sequelize = require('./config/connection');
+// our API/HTML routes
 const routes = require('./routes');
 
 // Create an instance of the express app.
