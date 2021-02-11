@@ -22,7 +22,8 @@ Post.init(
   owner: // the User.id of the Post's creator
   {
     type: DataTypes.STRING(32),
-    allowNull: false
+    allowNull: false,
+    references: { model: 'user', key: 'id' }
   },
   title: // the title of the Post
   {

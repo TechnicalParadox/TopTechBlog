@@ -23,12 +23,14 @@ Comment.init(
   owner: // id of the User who created the post
   {
     type: DataTypes.STRING(32),
-    allowNull: false
+    allowNull: false,
+    references: { model: 'user', key: 'id' }
   },
   post: // id of the Post the Comment was made on
   {
     type: DataTypes.STRING(32),
-    allowNull: false
+    allowNull: false,
+    references: { model: 'post', key: 'id' }
   },
   text: // the text of the Comment, max length of 500 chars
   {
