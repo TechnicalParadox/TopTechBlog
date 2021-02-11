@@ -23,33 +23,35 @@ router.post('/', (req, res) =>
   })
   .catch(err =>
   {
-    console.log('/CONTROLLERS/API/USERROUTES ERROR!','/ - POST' , err);
+    console.log('./CONTROLLERS/API/USERROUTES ERROR!','/ - POST, User.create' , err);
     res.status(500).json(err);
   })
 });
 
 // login as User
+// expects { email: 'a@e.c', password: 'toor' }
 router.post('/login', async (req, res) =>
 {
   User.findOne({ where: { email: req.body.email } })
   .then(dbUserData =>
   {
-    if (!dbUserData)
-    {
-      res.status(400).json({ message: 'Invalid email/password' });
-      return;
-    }
+    if (!dbUserData) { res.status(401).json({ message: 'Invalid email/password' }); return; }
 
     const match = await dbUserData.checkPassword(req.body.password);
 
-    if (!match) { res.status(400).json({ message: 'Invalid email/password' }); return; }
+    if (!match) { res.status(401).json({ message: 'Invalid email/password' }); return; }
 
     // TODO: express session
   })
+  .catch(err =>
+  {
+    console.log('./CONTROLLERS/API/USERROUTES ERROR', '/login - POST, User.findOne', err);
+    res.status(500).json(err);
+  }
 });
 
 // logout of User
-router.post('/logout', withAuth, (req, res) =>
+router.post('/logout', loggedIn, (req, res) =>
 {
   // // TODO: destroy express session
 });
