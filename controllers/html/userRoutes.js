@@ -5,11 +5,11 @@ const loggedIn = require('../../utils/checkLogin');
 // sequelize connection
 const sequelize = require('../../config/connection');
 // sequelize Models
-const { Post, Comment } = require('../../models');
+const { Post } = require('../../models');
 
 router.get('/login', (req, res) =>
 {
-
+  res.render('login', { loggedIn: req.session.loggedIn });
 });
 
 router.get('/dashboard', loggedIn, (req, res) =>

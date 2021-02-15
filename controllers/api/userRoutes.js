@@ -55,7 +55,7 @@ router.post('/login', async (req, res) =>
       req.session.username = dbUserData.username;
       req.session.loggedIn = true;
 
-      return res.status(200).redirect('/');
+      return res.status(200).end();
     });
   })
   .catch(err =>

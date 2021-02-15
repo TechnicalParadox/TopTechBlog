@@ -19,7 +19,7 @@ router.get('', (req, res) =>
   {
     if (!dbPostData) return res.status(404).redirect('/');
 
-    return res.status(200).json(dbPostData);
+    return res.status(200).render('index', { loggedIn: req.session.loggedIn });
   })
   .catch(err =>
   {

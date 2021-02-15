@@ -3,12 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <title>TopTechBlogs</title>
 </head>
 <body>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>
+          <a href="/">TopTechBlogs</a>
+        </h1>
+        <nav>
+          {{#if loggedIn}}
+          <a href="/user/dashboard">dashboard</a>
+          <button id="logout" class="btn-no-style">logout</button>
+          {{else}}
+          <a href="/user/login">login/create account</a>
+          {{/if}}
+        </nav>
+      </header>
+      <main>
+        {{{ body }}}
+      </main>
+      <footer>
+        Thanks for visiting!
+      </footer>
+    </div>
 
-{{{ body }}}
-
-
+    {{#if loggedIn}}
+    <script src="assets/js/logout.js"></script>
+    {{/if}}
+  </body>
 </body>
 </html>
