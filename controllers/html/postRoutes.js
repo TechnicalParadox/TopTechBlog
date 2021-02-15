@@ -19,14 +19,21 @@ router.get('/:id', (req, res) =>
     include:
     [
       { model: User, as: 'post_owner', attributes: ['id', 'username'] },
-      { model: Comment, as: 'post_comments', attributes: ['id', 'text', 'createdAt'], include: [{ model: User, as: 'comment_owner', attributes: ['id', 'username'] }] }
+      {
+        model: Comment,
+        as: 'post_comments',
+        attributes: ['id', 'text', 'createdAt'],
+        order: [[{model: Comment}, 'createdAt', 'DESC']],
+        include: [{ model: User, as: 'comment_owner', attributes: ['id', 'username'] }]
+      }
     ]
   })
   .then(dbPostData =>
   {
     if (!dbPostData) return res.status(404).redirect('/');
 
-    return res.status(200).json(dbPostData.get({plain: true}));
+    const post = dbPostData.get({plain:true});
+    return res.status(200).render('post', {post, loggedIn: req.session.loggedIn});
   })
   .catch(err =>
   {

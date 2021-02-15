@@ -6,6 +6,8 @@ require('dotenv').config(); // for process.env.DEFAULT_PORT
 const express = require('express');
 // express handlebars templating engine
 const exphbs  = require('express-handlebars');
+const helpers = require('./utils/helpers');
+const hbs = exphbs.create({ helpers });
 // body parser
 const bodyParser = require('body-parser');
 // path
@@ -49,7 +51,7 @@ app.use(express.static(path.join(__dirname, '/public')));
 
 
 // Set Handlebars as the default templating engine
-app.engine("handlebars", exphbs({ deafaultLayout: "main" }));
+app.engine("handlebars", hbs.engine);
 app.set("view engine", "handlebars");
 
 // Use our routes defined in ./controllers

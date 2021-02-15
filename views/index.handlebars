@@ -1,3 +1,7 @@
-<section>
-    <H1>Hello World!</H1>
-</section>
+<ol class="post-list">
+  {{#each posts as |post|}}
+  <li>
+    {{> post-info post}}
+  </li>
+  {{/each}}
+</ol>

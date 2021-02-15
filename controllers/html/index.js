@@ -13,13 +13,17 @@ router.get('', (req, res) =>
   {
     attributes: ['id', 'title', 'text', 'createdAt', 'updatedAt',
       [sequelize.literal('(SELECT COUNT(*) FROM comment WHERE post.id = comment.post)'), 'numComments'] ],
+    order: [['createdAt', 'DESC']],
     include: [{ model: User, as: 'post_owner', attributes: ['id', 'username'] }]
   })
   .then(dbPostData =>
   {
     if (!dbPostData) return res.status(404).redirect('/');
 
-    return res.status(200).render('index', { loggedIn: req.session.loggedIn });
+    // serialize posts
+    const posts = dbPostData.map(post => post.get({ plain: true }));
+    console.log(posts);
+    return res.status(200).render('index', { loggedIn: req.session.loggedIn, posts});
   })
   .catch(err =>
   {
