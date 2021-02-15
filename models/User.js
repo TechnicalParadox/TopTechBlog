@@ -53,7 +53,7 @@ User.init(
   {
     type: DataTypes.INTEGER,
     allowNull: false,
-    default: 0
+    defaultValue: 0
   }
 },
 {
@@ -64,20 +64,22 @@ User.init(
     async beforeCreate(newUserData)
     {
       // hash the password with bcrypt
-      newUserData.password = await bcrypt.hash(newUserData.password, 10);
+      newUserData.passhash = await bcrypt.hash(newUserData.passhash, 10);
       return newUserData;
+
     },
     // to be done before we UPDATE the existing User in the database
     async beforeUpdate(updatedUserData)
     {
       // hash the updated password with bcrypt
-      updatedUserData.password = await bcrypt.hash(newUserData.password, 10);
+      updatedUserData.password = await bcrypt.hash(updatedUserData.passhash, 10);
       return updatedUserData;
     }
   },
   sequelize,
   underscored: true,
-  modelName: 'user'
+  modelName: 'user',
+  freezeTableName: true
 });
 
 module.exports = User;

@@ -18,7 +18,7 @@ Comment.belongsTo(User, { foreignKey: 'owner' });
 // A Post can have many Comments
 Post.hasMany(Comment, { foreignKey: 'post' });
 // A Comment belongs to a Post
-Comment.belongsTo(Post, { foreignKey: 'post' });
+Comment.belongsTo(Post, { foreignKey: 'post', as: 'commented_on_post' });
 
 // Export Models
 module.exports = { User, Post, Comment };

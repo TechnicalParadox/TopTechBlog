@@ -4,6 +4,8 @@ const router = require('express').Router();
 const { User } = require('../../models');
 // checkLogin express middleware
 const loggedIn = require('../../utils/checkLogin');
+// uniqid
+const uniqid = require('uniqid');
 
 // create a new User
 // expects { username: 'abc123', email: 'a@e.c', password: 'toor' }
@@ -11,20 +13,21 @@ router.post('/', (req, res) =>
 {
   User.create(
   {
+    id: uniqid(),
     username: req.body.username,
     email: req.body.email,
-    passhash: req.body.password // already hashed by bcrypt on beforeCreate
+    passhash: req.body.password // hashed by bcrypt on beforeCreate
   })
   .then(dbUserData =>
   {
     // // TODO: save session
 
-    res.status(200).redirect('/');
+    return res.status(200).redirect('/');
   })
   .catch(err =>
   {
     console.log('./CONTROLLERS/API/USERROUTES ERROR!','/ - POST, User.create' , err);
-    res.status(500).json(err);
+    return res.status(500).json(err);
   })
 });
 
@@ -33,21 +36,22 @@ router.post('/', (req, res) =>
 router.post('/login', async (req, res) =>
 {
   User.findOne({ where: { email: req.body.email } })
-  .then(dbUserData =>
+  .then(async dbUserData =>
   {
-    if (!dbUserData) { res.status(401).json({ message: 'Invalid email/password' }); return; }
+    if (!dbUserData) { return res.status(401).json({ message: 'Invalid email/password' }); }
 
     const match = await dbUserData.checkPassword(req.body.password);
 
-    if (!match) { res.status(401).json({ message: 'Invalid email/password' }); return; }
+    if (!match) { return res.status(401).json({ message: 'Invalid email/password' }); }
 
     // TODO: express session
+    return res.status(200).redirect('/');
   })
   .catch(err =>
   {
     console.log('./CONTROLLERS/API/USERROUTES ERROR', '/login - POST, User.findOne', err);
-    res.status(500).json(err);
-  }
+    return res.status(500).json(err);
+  });
 });
 
 // logout of User
@@ -55,3 +59,5 @@ router.post('/logout', loggedIn, (req, res) =>
 {
   // // TODO: destroy express session
 });
+
+module.exports = router;

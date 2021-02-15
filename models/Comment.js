@@ -1,14 +1,14 @@
 // Dependencies
 // ------------
 // Sequelize
-{ Model, DataTypes } = require('sequelize');
+const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../config/connection.js');
 
 // 'comments' table class Sequelize Model
 
 class Comment extends Model
 {
-
+  checkOwner(userId) { return userId == this.owner; }
 }
 
 Comment.init(
@@ -44,7 +44,8 @@ Comment.init(
   hooks: {},
   sequelize,
   underscored: true,
-  modelName: 'comment'
+  modelName: 'comment',
+  freezeTableName: true
 });
 
 module.exports = Comment;

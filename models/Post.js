@@ -1,14 +1,14 @@
 // Dependenices
 // ------------
 // Sequelize
-{ Model, DataTypes } = require('sequelize');
+const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../config/connection.js');
 
 // 'posts' table class Sequelize Model
 
 class Post extends Model
 {
-  checkOwner(userId) { return userId == this.owner }
+  checkOwner(userId) { return userId == this.owner; }
 }
 
 Post.init(
@@ -46,7 +46,8 @@ Post.init(
   },
   sequelize,
   underscored: true,
-  modelName: 'post'
+  modelName: 'post',
+  freezeTableName: true
 });
 
 module.exports = Post;
