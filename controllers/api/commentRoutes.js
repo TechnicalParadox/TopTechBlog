@@ -38,7 +38,7 @@ router.delete('/:id', loggedIn, (req, res) =>
     // if there is no comment with a matching id we notify and return
     if (!commentData) { return res.status(404).json({ message: 'Comment with this ID does not exist' }); }
 
-    console.log('./CONTROLLERS/API/COMMENTROUTES ALERT', `${req.session.user_id} is attempting to delete Comment ${commentData.id}`);
+    console.log('./CONTROLLERS/API/COMMENTROUTES ALERT', `User ${req.session.user_id} is attempting to delete Comment ${req.params.id}`);
 
     // otherwise, we verify that the client user owns the comment
     const verified = commentData.verifyOwner(req.session.user_id);
@@ -47,7 +47,7 @@ router.delete('/:id', loggedIn, (req, res) =>
     if (!verified) { return res.status(401).json({ message: 'You do not have permission to do that' }); }
 
     // otherwise, we destroy the comment
-    Comment.destroy({ where: { id: commentData.id }})
+    Comment.destroy({ where: { id: req.params.id }})
     .then(deletedComment => { res.status(200).redirect('/') })
     .catch(err =>
     {

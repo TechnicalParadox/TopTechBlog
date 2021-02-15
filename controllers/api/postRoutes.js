@@ -90,7 +90,7 @@ router.delete('/:id', loggedIn, async (req, res) =>
     // if there is no post with a matching id we notify and return
     if (!postData) { return res.status(404).json({ message: 'Post with this ID does not exist' }); }
 
-    console.log('./CONTROLLERS/API/POSTROUTES ALERT', `${req.session.user_id} is attempting to delete Post ${postData.id}`);
+    console.log('./CONTROLLERS/API/POSTROUTES ALERT', `User ${req.session.user_id} is attempting to delete Post ${req.params.id}`);
 
     // otherwise, we verify that the client user owns the post
     const verified = postData.verifyOwner(req.session.user_id);
@@ -99,17 +99,17 @@ router.delete('/:id', loggedIn, async (req, res) =>
     if (!verified) { return res.status(401).json({ message: 'You do not have permission to do that' }); }
 
     // otherwise, we destroy the post
-    Post.destroy({ where: { id: postData.id }})
+    Post.destroy({ where: { id: req.params.id }})
     .then(deletedPost => { res.status(200).redirect('/') })
     .catch(err =>
     {
-      console.log('./CONTROLLERS/API/POSTROUTES ERROR', '/:id - DELETE', err);
+      console.log('./CONTROLLERS/API/POSTROUTES ERROR', '/:id - DELETE B', err);
       return res.status(500).json(err);
     });
   })
   .catch(err =>
   {
-    console.log('./CONTROLLERS/API/POSTROUTES ERROR', '/:id - DELETE', err);
+    console.log('./CONTROLLERS/API/POSTROUTES ERROR', '/:id - DELETE A', err);
     return res.status(500).json(err);
   });
 });

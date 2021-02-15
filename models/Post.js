@@ -8,7 +8,7 @@ const sequelize = require('../config/connection.js');
 
 class Post extends Model
 {
-  checkOwner(userId) { return userId == this.owner; }
+  verifyOwner(userId) { return userId == this.owner; }
 }
 
 Post.init(

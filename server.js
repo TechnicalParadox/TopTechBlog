@@ -15,11 +15,29 @@ const path = require('path');
 const sequelize = require('./config/connection');
 // our API/HTML routes
 const routes = require('./controllers');
+// Session
+const session = require('express-session');
+// Sequelize Store
+const SequelizeStore = require('connect-session-sequelize')(session.Store);
 
 // Create an instance of the express app.
 const app = express();
 // Set port for connection
 const PORT = process.env.PORT || process.env.DEFAULT_PORT || 3001; // deployment environment || local environment .env || default 3001
+
+// Start/Use Session
+const sess =
+{
+  secret: process.env.SESSION_SECRET,
+  cookie: {},
+  resave: false,
+  saveUnitialized: true,
+  store: new SequelizeStore(
+  {
+    db: sequelize
+  })
+};
+app.use(session(sess));
 
 // Added so body parser can handle post requests.
 // If we didn't have this the body would come back as undefined
@@ -27,7 +45,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // Host static Asset files so Public css and js files can be retrieved by client
-app.use(express.static(path.join(__dirname, '/public/assets')));
+app.use(express.static(path.join(__dirname, '/public')));
 
 
 // Set Handlebars as the default templating engine

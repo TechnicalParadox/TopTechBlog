@@ -20,9 +20,14 @@ router.post('/', (req, res) =>
   })
   .then(dbUserData =>
   {
-    // // TODO: save session
+    req.session.save(() =>
+    {
+      req.session.user_id = dbUserData.id;
+      req.session.username = dbUserData.username;
+      req.session.loggedIn = true;
 
-    return res.status(200).redirect('/');
+      return res.status(200).redirect('/');
+    });
   })
   .catch(err =>
   {
@@ -44,8 +49,14 @@ router.post('/login', async (req, res) =>
 
     if (!match) { return res.status(401).json({ message: 'Invalid email/password' }); }
 
-    // TODO: express session
-    return res.status(200).redirect('/');
+    req.session.save(() =>
+    {
+      req.session.user_id = dbUserData.id;
+      req.session.username = dbUserData.username;
+      req.session.loggedIn = true;
+
+      return res.status(200).redirect('/');
+    });
   })
   .catch(err =>
   {
@@ -57,7 +68,8 @@ router.post('/login', async (req, res) =>
 // logout of User
 router.post('/logout', loggedIn, (req, res) =>
 {
-  // // TODO: destroy express session
+  // destryo session
+  req.session.destroy(() => { res.status(204).redirect('/'); });
 });
 
 module.exports = router;
