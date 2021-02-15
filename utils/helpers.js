@@ -9,5 +9,9 @@ module.exports =
   format_plural: (str, int) =>
   {
     return parseInt(int) === 1 ? str : str+"s";
+  },
+  is_empty: (arr) =>
+  {
+    return arr.length < 1;
   }
 }

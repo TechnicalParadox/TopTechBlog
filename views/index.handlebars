@@ -1,4 +1,7 @@
 <ol class="post-list">
+  {{#if (is_empty posts)}}
+    Be the first to add a post!
+  {{/if}}
   {{#each posts as |post|}}
   <li>
     {{> post-info post}}
