@@ -9,7 +9,7 @@ This project does not currently use a license.
 * [Credits](#credits)
 ---------------
  ## Deployed URL:
-[Click to launch](https://toptechblog.herokuapp.com)
+[Click to launch](https://toptechblogs.herokuapp.com)
 ## Usage
 Open the site and create an account to post.
 
