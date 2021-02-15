@@ -16,6 +16,7 @@ router.get('/:id', (req, res) =>
     where: { id: req.params.id },
     attributes: ['title', 'text', 'createdAt', 'updatedAt',
       [sequelize.literal('(SELECT COUNT(*) FROM comment WHERE post.id = comment.post)'), 'numComments'] ],
+    order: [[{model: Comment, as: 'post_comments'}, 'createdAt', 'DESC']], // THIS IS HOW YOU SORT JOINED TABLES
     include:
     [
       { model: User, as: 'post_owner', attributes: ['id', 'username'] },
@@ -23,7 +24,6 @@ router.get('/:id', (req, res) =>
         model: Comment,
         as: 'post_comments',
         attributes: ['id', 'text', 'createdAt'],
-        order: [[{model: Comment}, 'createdAt', 'DESC']],
         include: [{ model: User, as: 'comment_owner', attributes: ['id', 'username'] }]
       }
     ]
