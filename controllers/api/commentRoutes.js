@@ -23,7 +23,6 @@ router.post('/', loggedIn, (req, res) =>
   });
 });
 
-
 // delete a comment
 router.delete('/:id', loggedIn, (req, res) =>
 {
