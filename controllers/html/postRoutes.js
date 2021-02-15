@@ -14,7 +14,7 @@ router.get('/:id', (req, res) =>
   Post.findOne(
   {
     where: { id: req.params.id },
-    attributes: ['title', 'text', 'createdAt', 'updatedAt',
+    attributes: ['id', 'title', 'text', 'createdAt', 'updatedAt',
       [sequelize.literal('(SELECT COUNT(*) FROM comment WHERE post.id = comment.post)'), 'numComments'] ],
     order: [[{model: Comment, as: 'post_comments'}, 'createdAt', 'DESC']], // THIS IS HOW YOU SORT JOINED TABLES
     include:
@@ -47,7 +47,7 @@ router.get('/:id/edit', loggedIn, isPostOwner, (req, res) =>
   Post.findOne(
   {
     where: { id: req.params.id },
-    attributes: ['title', 'text', 'createdAt', 'updatedAt',
+    attributes: ['id', 'title', 'text', 'createdAt', 'updatedAt',
       [sequelize.literal('(SELECT COUNT(*) FROM comment WHERE post.id = comment.post)'), 'numComments'] ],
     include:
     [
@@ -59,7 +59,9 @@ router.get('/:id/edit', loggedIn, isPostOwner, (req, res) =>
   {
     if (!dbPostData) return res.status(404).redirect('/');
 
-    return res.status(200).json(dbPostData.get({plain: true}));
+    // serialize post
+    const post = dbPostData.get({plain: true});
+    return res.status(200).render('editPost', {post, loggedIn: req.session.loggedIn});
   })
   .catch(err =>
   {

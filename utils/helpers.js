@@ -13,5 +13,13 @@ module.exports =
   is_empty: (arr) =>
   {
     return arr.length < 1;
+  },
+  preview: (str) =>
+  {
+    if (str.length > 50)
+    {
+      return str.substring(0,30)+"...";
+    }
+    return str;
   }
 }

@@ -1,0 +1,24 @@
+<article>
+  <a href="/user/dashboard"> &larr; Back to dashboard</a>
+  <h2>
+    Edit Post
+  </h2>
+  <form class="edit-post-form">
+    <div>
+      <input name="post-title" type="text" value="{{post.title}}" />
+      <p></p>
+      <br>
+      <textarea name="post-text">{{post.text}}</textarea>
+    </div>
+    <div>
+      by you on {{format_date post.createdAt}}
+    </div>
+    <button type="submit">Save post</button>
+    <button type="button" class="delete-post-btn">Delete post</button>
+  </form>
+</article>
+
+{{#if loggedIn}}
+<script src="../../assets/js/edit-post.js"></script>
+<script src="../../assets/js/delete-post.js"></script>
+{{/if}}

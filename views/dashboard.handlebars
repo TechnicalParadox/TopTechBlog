@@ -1,0 +1,34 @@
+<section>
+  <h2>Create New Post</h2>
+
+  <form class="new-post-form">
+    <div>
+      <label for="post-title">Title</label>
+      <input type="text" id="post-title" name="post-title" />
+    </div>
+    <div>
+      <label for="post-text">Body</label>
+      <textarea id="post-text" name="post-text"></textarea>
+    </div>
+    <button type="submit" class="btn">Create</button>
+  </form>
+</section>
+
+<section>
+  <h2>Your Posts</h2>
+  {{#if (is_empty posts)}}
+    You do not have any posts :(
+  {{/if}}
+  {{#if posts.length}}
+  <ol>
+    {{#each posts as |post|}}
+    <li>
+      {{> post-preview post}}
+      <a href="/post/{{post.id}}/edit" class="edit-link">Edit post</a>
+    </li>
+    {{/each}}
+  </ol>
+  {{/if}}
+</section>
+
+<script src="../../assets/js/add-post.js"></script>

@@ -32,7 +32,9 @@ const sess =
 {
   secret: process.env.SESSION_SECRET,
   cookie: {},
-  resave: false,
+  resave: true,
+  rolling: true,
+  cookie: { expires: 15 * 60 * 1000 }, // timeout after 15 mins of inactivity
   saveUninitialized: true,
   store: new SequelizeStore(
   {

@@ -22,7 +22,6 @@ router.get('', (req, res) =>
 
     // serialize posts
     const posts = dbPostData.map(post => post.get({ plain: true }));
-    console.log(posts);
     return res.status(200).render('index', { loggedIn: req.session.loggedIn, posts});
   })
   .catch(err =>

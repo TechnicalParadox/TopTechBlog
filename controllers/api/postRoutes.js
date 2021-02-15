@@ -61,7 +61,7 @@ router.put('/:id', loggedIn, (req, res) =>
       if (!updatedPostData) { return res.status(404).json({ message: 'Nothing was updated'}); }
 
       // otherwise, redirect client to updated post
-      return res.status(200).redirect('/posts/'+req.params.id);
+      return res.status(200).end();
     })
     .catch(err =>
     {
@@ -100,7 +100,7 @@ router.delete('/:id', loggedIn, async (req, res) =>
 
     // otherwise, we destroy the post
     Post.destroy({ where: { id: req.params.id }})
-    .then(deletedPost => { res.status(200).redirect('/') })
+    .then(deletedPost => { res.status(200).end() })
     .catch(err =>
     {
       console.log('./CONTROLLERS/API/POSTROUTES ERROR', '/:id - DELETE B', err);

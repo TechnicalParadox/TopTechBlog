@@ -25,7 +25,8 @@ router.get('/dashboard', loggedIn, (req, res) =>
   {
     if (!dbPostData) return res.status(404).redirect('/');
 
-    return res.status(200).json(dbPostData);
+    const posts = dbPostData.map(post => post.get({ plain: true }));
+    return res.status(200).render('dashboard', {posts, loggedIn: req.session.loggedIn});
   })
   .catch(err =>
   {
